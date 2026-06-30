@@ -95,7 +95,7 @@ function AdminDashboard() {
               <span className="admin-pdf-icon">📄</span>
               <span>{activePdf.filename}</span>
               <span className="admin-pdf-date">
-                Enviado em {formatDate(activePdf.uploadedAt)}
+                Enviado em {formatDate(activePdf.createdAt)}
               </span>
             </div>
             <div className="admin-pdf-actions">

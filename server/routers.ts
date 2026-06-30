@@ -56,7 +56,7 @@ export const appRouter = router({
         });
 
         // Get latest PDF
-        const pdfs = await db.select().from(pdfFiles).orderBy(desc(pdfFiles.uploadedAt)).limit(1);
+        const pdfs = await db.select().from(pdfFiles).orderBy(desc(pdfFiles.createdAt)).limit(1);
         const pdf = pdfs[0];
 
         return {
@@ -99,7 +99,7 @@ export const appRouter = router({
         const pdfs = await db
           .select()
           .from(pdfFiles)
-          .orderBy(desc(pdfFiles.uploadedAt))
+          .orderBy(desc(pdfFiles.createdAt))
           .limit(1);
         return pdfs[0] || null;
       }),

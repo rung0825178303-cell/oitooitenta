@@ -1,5 +1,6 @@
 import { eq } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 import { InsertUser, users } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -30,8 +31,9 @@ export async function getDb() {
   _dbConnecting = true;
   try {
     const dbUrl = process.env.DATABASE_URL;
-    console.log("[Database] Attempting to connect...");
-    _db = drizzle(dbUrl);
+    console.log("[Database] Attempting to connect to PostgreSQL...");
+    const client = postgres(dbUrl);
+    _db = drizzle(client);
     console.log("[Database] Connection established successfully");
   } catch (error) {
     console.error("[Database] Failed to connect:", error instanceof Error ? error.message : error);
@@ -92,7 +94,8 @@ export async function upsertUser(user: InsertUser): Promise<void> {
       updateSet.lastSignedIn = new Date();
     }
 
-    await db.insert(users).values(values).onDuplicateKeyUpdate({
+    await db.insert(users).values(values).onConflictDoUpdate({
+      target: users.openId,
       set: updateSet,
     });
   } catch (error) {

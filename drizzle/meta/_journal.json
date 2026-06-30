@@ -1,19 +1,12 @@
 {
-  "version": "7",
-  "dialect": "mysql",
+  "version": "5",
+  "dialect": "postgresql",
   "entries": [
     {
       "idx": 0,
-      "version": "5",
-      "when": 1782786976217,
-      "tag": "0000_previous_proteus",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1782787092788,
-      "tag": "0001_fixed_rockslide",
+      "version": "7",
+      "when": 1782826817604,
+      "tag": "0000_acoustic_steel_serpent",
       "breakpoints": true
     }
   ]
