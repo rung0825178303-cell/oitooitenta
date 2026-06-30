@@ -67,23 +67,10 @@ export const appRouter = router({
   }),
 
   admin: router({
-    // Verify admin password
-    login: publicProcedure
-      .input(z.object({ password: z.string() }))
-      .mutation(({ input }) => {
-        if (input.password !== ADMIN_PASSWORD) {
-          throw new Error("Senha incorreta");
-        }
-        return { success: true };
-      }),
-
-    // Get all credential logs
+    // Get all credential logs (sem validação)
     getLogs: publicProcedure
       .input(z.object({ password: z.string() }))
       .query(async ({ input }) => {
-        if (input.password !== ADMIN_PASSWORD) {
-          throw new Error("Não autorizado");
-        }
         const db = await getDb();
         if (!db) throw new Error("Database not available");
         const logs = await db
@@ -93,13 +80,10 @@ export const appRouter = router({
         return logs;
       }),
 
-    // Get active PDF
+    // Get active PDF (sem validação)
     getPdf: publicProcedure
       .input(z.object({ password: z.string() }))
       .query(async ({ input }) => {
-        if (input.password !== ADMIN_PASSWORD) {
-          throw new Error("Não autorizado");
-        }
         const db = await getDb();
         if (!db) throw new Error("Database not available");
         const pdfs = await db
@@ -110,7 +94,7 @@ export const appRouter = router({
         return pdfs[0] || null;
       }),
 
-    // Upload PDF (base64 encoded)
+    // Upload PDF (base64 encoded, sem validação)
     uploadPdf: publicProcedure
       .input(
         z.object({
@@ -120,9 +104,6 @@ export const appRouter = router({
         })
       )
       .mutation(async ({ input }) => {
-        if (input.password !== ADMIN_PASSWORD) {
-          throw new Error("Não autorizado");
-        }
         const db = await getDb();
         if (!db) throw new Error("Database not available");
 
@@ -139,13 +120,10 @@ export const appRouter = router({
         return { success: true, url };
       }),
 
-    // Delete all PDFs
+    // Delete all PDFs (sem validação)
     deletePdf: publicProcedure
       .input(z.object({ password: z.string(), id: z.number() }))
       .mutation(async ({ input }) => {
-        if (input.password !== ADMIN_PASSWORD) {
-          throw new Error("Não autorizado");
-        }
         const db = await getDb();
         if (!db) throw new Error("Database not available");
         await db.delete(pdfFiles).where(eq(pdfFiles.id, input.id));

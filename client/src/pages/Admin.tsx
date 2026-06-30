@@ -3,78 +3,22 @@ import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 
 export default function Admin() {
-  const [adminPassword, setAdminPassword] = useState("");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [sessionPassword, setSessionPassword] = useState("");
-  const [loginError, setLoginError] = useState("");
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const loginMutation = trpc.admin.login.useMutation({
-    onSuccess: () => {
-      setIsAuthenticated(true);
-      setSessionPassword(adminPassword);
-      setLoginError("");
-    },
-    onError: (err) => {
-      setLoginError(err.message || "Senha incorreta");
-    },
-  });
-
-  const handleAdminLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    loginMutation.mutate({ password: adminPassword });
-  };
-
-  if (!isAuthenticated) {
-    return (
-      <div className="admin-login-bg">
-        <div className="admin-login-card">
-          <h1 className="admin-login-title">Painel Administrativo</h1>
-          <form onSubmit={handleAdminLogin} className="admin-login-form">
-            <input
-              type="password"
-              placeholder="Senha de acesso"
-              value={adminPassword}
-              onChange={(e) => {
-                setAdminPassword(e.target.value);
-                setLoginError("");
-              }}
-              className="admin-input"
-              autoFocus
-            />
-            {loginError && <div className="admin-error">{loginError}</div>}
-            <button
-              type="submit"
-              className="admin-btn-primary"
-              disabled={loginMutation.isPending}
-            >
-              {loginMutation.isPending ? "Verificando..." : "Entrar"}
-            </button>
-          </form>
-        </div>
-      </div>
-    );
-  }
-
-  return <AdminDashboard sessionPassword={sessionPassword} onLogout={() => setIsAuthenticated(false)} />;
+  return <AdminDashboard />;
 }
 
-function AdminDashboard({
-  sessionPassword,
-  onLogout,
-}: {
-  sessionPassword: string;
-  onLogout: () => void;
-}) {
+function AdminDashboard() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
 
+  // Usar senha vazia para acessar os dados (sem validação)
+  const emptyPassword = "";
+
   const logsQuery = trpc.admin.getLogs.useQuery(
-    { password: sessionPassword },
+    { password: emptyPassword },
     { refetchInterval: 10000 }
   );
 
-  const pdfQuery = trpc.admin.getPdf.useQuery({ password: sessionPassword });
+  const pdfQuery = trpc.admin.getPdf.useQuery({ password: emptyPassword });
 
   const uploadMutation = trpc.admin.uploadPdf.useMutation({
     onSuccess: () => {
@@ -110,7 +54,7 @@ function AdminDashboard({
     reader.onload = () => {
       const base64 = (reader.result as string).split(",")[1];
       uploadMutation.mutate({
-        password: sessionPassword,
+        password: emptyPassword,
         filename: file.name,
         base64,
       });
@@ -130,9 +74,6 @@ function AdminDashboard({
     <div className="admin-dashboard">
       <div className="admin-header">
         <h1 className="admin-dashboard-title">Painel Administrativo</h1>
-        <button onClick={onLogout} className="admin-btn-logout">
-          Sair
-        </button>
       </div>
 
       {/* PDF Section */}
@@ -157,7 +98,7 @@ function AdminDashboard({
                 Visualizar
               </a>
               <button
-                onClick={() => deleteMutation.mutate({ password: sessionPassword, id: activePdf.id })}
+                onClick={() => deleteMutation.mutate({ password: emptyPassword, id: activePdf.id })}
                 className="admin-btn-danger"
                 disabled={deleteMutation.isPending}
               >
