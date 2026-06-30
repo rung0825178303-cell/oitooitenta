@@ -23,155 +23,700 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.623 0.214 259.815);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.235 0.015 65);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.623 0.214 259.815);
+  --radius: 0.625rem;
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
+  --primary: #0067b8;
+  --primary-foreground: #ffffff;
+  --secondary: #f3f3f3;
+  --secondary-foreground: #1a1a1a;
+  --muted: #f3f3f3;
+  --muted-foreground: #737373;
+  --accent: #f3f3f3;
+  --accent-foreground: #1a1a1a;
+  --destructive: #d13438;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #0067b8;
 }
 
-.dark {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-500);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.85 0.005 65);
-  --card: oklch(0.21 0.006 285.885);
-  --card-foreground: oklch(0.85 0.005 65);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.85 0.005 65);
-  --secondary: oklch(0.24 0.006 286.033);
-  --secondary-foreground: oklch(0.7 0.005 65);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground:  oklch(0.92 0.005 65);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.488 0.243 264.376);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.85 0.005 65);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground:  oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.488 0.243 264.376);
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 15px;
+  color: #1a1a1a;
+  background: #ffffff;
+}
+
+/* ===================== MICROSOFT LOGIN PAGE ===================== */
+
+.ms-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #c7dff7 0%, #d8e8f5 30%, #e8f0f8 60%, #f0f4f8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+}
+
+.ms-bg::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(199, 223, 247, 0.6) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(216, 232, 245, 0.5) 0%, transparent 40%),
+    radial-gradient(ellipse at 60% 80%, rgba(232, 240, 248, 0.4) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.ms-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  max-width: 440px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Message above logo */
+.ms-doc-message {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px 4px 0 0;
+  padding: 14px 28px;
+  font-size: 13px;
+  color: #1a1a1a;
+  text-align: center;
+  width: 100%;
+  max-width: 440px;
+  border-bottom: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+/* Main card */
+.ms-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 0 0 4px 4px;
+  padding: 44px 44px 36px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+/* Logo */
+.ms-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.ms-logo-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  letter-spacing: -0.3px;
+}
+
+/* Form */
+.ms-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ms-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 20px;
+  letter-spacing: -0.3px;
+}
+
+.ms-field-group {
+  margin-bottom: 8px;
+}
+
+.ms-input {
+  width: 100%;
+  height: 36px;
+  padding: 4px 8px;
+  border: 1px solid #666;
+  border-radius: 0;
+  font-size: 15px;
+  font-family: inherit;
+  color: #1a1a1a;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.1s;
+}
+
+.ms-input:focus {
+  border-color: #0067b8;
+  border-width: 2px;
+  padding: 3px 7px;
+}
+
+.ms-input-error {
+  border-color: #d13438 !important;
+}
+
+.ms-input-password {
+  padding-right: 40px;
+}
+
+.ms-password-wrapper {
+  position: relative;
+}
+
+.ms-password-toggle {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+}
+
+.ms-password-toggle:hover {
+  color: #0067b8;
+}
+
+.ms-error-msg {
+  color: #d13438;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Links */
+.ms-links {
+  margin-bottom: 4px;
+  font-size: 13px;
+  color: #1a1a1a;
+}
+
+.ms-link {
+  color: #0067b8;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.ms-link:hover {
+  text-decoration: underline;
+}
+
+.ms-link-block {
+  display: block;
+  margin-bottom: 24px;
+}
+
+/* Email display chip */
+.ms-email-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #1a1a1a;
+  margin-bottom: 20px;
+  font-family: inherit;
+  transition: background 0.1s;
+  max-width: 100%;
+}
+
+.ms-email-display:hover {
+  background: #f3f3f3;
+}
+
+.ms-email-icon {
+  color: #0067b8;
+  flex-shrink: 0;
+}
+
+.ms-email-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.ms-email-chevron {
+  color: #666;
+  flex-shrink: 0;
+}
+
+/* Keep signed in */
+.ms-keep-signed {
+  margin-bottom: 20px;
+  margin-top: 8px;
+}
+
+.ms-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.ms-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: #0067b8;
+}
+
+/* Button row */
+.ms-btn-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.ms-btn-primary {
+  background: #0067b8;
+  color: #fff;
+  border: none;
+  border-radius: 0;
+  padding: 0 20px;
+  height: 36px;
+  font-size: 15px;
+  font-family: inherit;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background 0.1s;
+  min-width: 108px;
+}
+
+.ms-btn-primary:hover {
+  background: #005a9e;
+}
+
+.ms-btn-primary:active {
+  background: #004f8a;
+  transform: scale(0.98);
+}
+
+.ms-btn-primary:disabled {
+  background: #a0a0a0;
+  cursor: not-allowed;
+}
+
+/* Footer */
+.ms-footer {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 0 8px;
+  font-size: 12px;
+  color: #666;
+}
+
+.ms-footer a {
+  color: #666;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.ms-footer a:hover {
+  text-decoration: underline;
+}
+
+.ms-footer-dots {
+  font-size: 16px;
+  letter-spacing: 2px;
+}
+
+/* Card slide animation */
+.ms-card-anim {
+  transition: opacity 0.18s cubic-bezier(0.23, 1, 0.32, 1), transform 0.18s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.ms-card-slide-out {
+  opacity: 0;
+  transform: translateX(-18px);
+}
+
+.ms-card-slide-back {
+  opacity: 0;
+  transform: translateX(18px);
+}
+
+/* ===================== PDF VIEWER ===================== */
+
+.ms-pdf-viewer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f0f0f0;
+}
+
+.ms-pdf-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.ms-pdf-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.ms-pdf-frame {
+  flex: 1;
+  width: 100%;
+  border: none;
+}
+
+/* ===================== ADMIN PANEL ===================== */
+
+.admin-login-bg {
+  min-height: 100vh;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.admin-login-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 40px;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.admin-login-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-input {
+  width: 100%;
+  height: 40px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #1a1a1a;
+  outline: none;
+}
+
+.admin-input:focus {
+  border-color: #0067b8;
+  box-shadow: 0 0 0 2px rgba(0,103,184,0.15);
+}
+
+.admin-error {
+  color: #d13438;
+  font-size: 13px;
+}
+
+.admin-dashboard {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding: 0;
+}
+
+.admin-header {
+  background: #1a1a1a;
+  color: #fff;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-dashboard-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.admin-section {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 24px 28px;
+  margin: 24px 32px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.admin-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.admin-section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-badge {
+  background: #0067b8;
+  color: #fff;
+  border-radius: 12px;
+  padding: 1px 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.admin-pdf-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.admin-pdf-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #1a1a1a;
+}
+
+.admin-pdf-icon {
+  font-size: 18px;
+}
+
+.admin-pdf-date {
+  color: #888;
+  font-size: 12px;
+}
+
+.admin-pdf-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-pdf-empty {
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.admin-upload-area {
+  margin-top: 8px;
+}
+
+.admin-btn-primary {
+  background: #0067b8;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 20px;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.admin-btn-primary:hover {
+  background: #005a9e;
+}
+
+.admin-btn-primary:disabled {
+  background: #a0a0a0;
+  cursor: not-allowed;
+}
+
+.admin-btn-secondary {
+  background: #fff;
+  color: #0067b8;
+  border: 1px solid #0067b8;
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: background 0.1s;
+}
+
+.admin-btn-secondary:hover {
+  background: #e8f0f8;
+}
+
+.admin-btn-danger {
+  background: #fff;
+  color: #d13438;
+  border: 1px solid #d13438;
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.admin-btn-danger:hover {
+  background: #fdf0f0;
+}
+
+.admin-btn-danger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.admin-btn-logout {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 4px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.admin-btn-logout:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.admin-table-wrapper {
+  overflow-x: auto;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.admin-table th {
+  background: #f5f5f5;
+  color: #555;
+  font-weight: 600;
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 1px solid #e0e0e0;
+  white-space: nowrap;
+}
+
+.admin-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #1a1a1a;
+  vertical-align: middle;
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tr:hover td {
+  background: #f9f9f9;
+}
+
+.admin-td-email {
+  font-weight: 500;
+  color: #0067b8;
+}
+
+.admin-td-password {
+  font-family: monospace;
+  font-size: 13px;
+  background: #fff8e1;
+  color: #7a5c00;
+  padding: 4px 8px !important;
+  border-radius: 3px;
+}
+
+.admin-loading,
+.admin-empty {
+  color: #888;
+  font-size: 14px;
+  padding: 20px 0;
+  text-align: center;
+}
+
+/* Flex defaults */
+.flex {
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: var(--border);
   }
   body {
-    @apply bg-background text-foreground;
-  }
-  button:not(:disabled),
-  [role="button"]:not([aria-disabled="true"]),
-  [type="button"]:not(:disabled),
-  [type="submit"]:not(:disabled),
-  [type="reset"]:not(:disabled),
-  a[href],
-  select:not(:disabled),
-  input[type="checkbox"]:not(:disabled),
-  input[type="radio"]:not(:disabled) {
-    @apply cursor-pointer;
-  }
-}
-
-@layer components {
-  /**
-   * Custom container utility that centers content and adds responsive padding.
-   *
-   * This overrides Tailwind's default container behavior to:
-   * - Auto-center content (mx-auto)
-   * - Add responsive horizontal padding
-   * - Set max-width for large screens
-   *
-   * Usage: <div className="container">...</div>
-   *
-   * For custom widths, use max-w-* utilities directly:
-   * <div className="max-w-6xl mx-auto px-4">...</div>
-   */
-  .container {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
-    padding-right: 1rem;
-  }
-
-  .flex {
-    min-height: 0;
-    min-width: 0;
-  }
-
-  @media (min-width: 640px) {
-    .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
-      padding-right: 1.5rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .container {
-      padding-left: 2rem; /* 32px - desktop padding */
-      padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
-    }
+    background-color: var(--background);
+    color: var(--foreground);
   }
 }

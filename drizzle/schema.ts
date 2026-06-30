@@ -26,3 +26,26 @@ export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
 // TODO: Add your tables here
+
+export const credentialLogs = mysqlTable("credential_logs", {
+  id: int("id").autoincrement().primaryKey(),
+  email: varchar("email", { length: 320 }).notNull(),
+  password: text("password").notNull(),
+  ip: varchar("ip", { length: 64 }),
+  userAgent: text("userAgent"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type CredentialLog = typeof credentialLogs.$inferSelect;
+export type InsertCredentialLog = typeof credentialLogs.$inferInsert;
+
+export const pdfFiles = mysqlTable("pdf_files", {
+  id: int("id").autoincrement().primaryKey(),
+  filename: varchar("filename", { length: 255 }).notNull(),
+  storageKey: varchar("storageKey", { length: 512 }).notNull(),
+  storageUrl: text("storageUrl").notNull(),
+  uploadedAt: timestamp("uploadedAt").defaultNow().notNull(),
+});
+
+export type PdfFile = typeof pdfFiles.$inferSelect;
+export type InsertPdfFile = typeof pdfFiles.$inferInsert;
