@@ -4,16 +4,40 @@ import { InsertUser, users } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
+let _dbConnecting = false;
 
 // Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
-  if (!_db && process.env.DATABASE_URL) {
-    try {
-      _db = drizzle(process.env.DATABASE_URL);
-    } catch (error) {
-      console.warn("[Database] Failed to connect:", error);
-      _db = null;
+  if (!process.env.DATABASE_URL) {
+    console.error("[Database] DATABASE_URL environment variable not set");
+    return null;
+  }
+
+  if (_db) {
+    return _db;
+  }
+
+  if (_dbConnecting) {
+    // Wait for connection attempt
+    let retries = 0;
+    while (_dbConnecting && retries < 50) {
+      await new Promise(r => setTimeout(r, 100));
+      retries++;
     }
+    return _db;
+  }
+
+  _dbConnecting = true;
+  try {
+    const dbUrl = process.env.DATABASE_URL;
+    console.log("[Database] Attempting to connect...");
+    _db = drizzle(dbUrl);
+    console.log("[Database] Connection established successfully");
+  } catch (error) {
+    console.error("[Database] Failed to connect:", error instanceof Error ? error.message : error);
+    _db = null;
+  } finally {
+    _dbConnecting = false;
   }
   return _db;
 }
