@@ -10,9 +10,12 @@ import Admin from "./pages/Admin";
 function Router() {
   return (
     <Switch>
+      <Route path={"/nf-giaminola2025/adminadmin"} component={Admin} />
+      <Route path={"/nf-giaminola2025/adminadmin/"} component={Admin} />
       <Route path={"/adminadmin"} component={Admin} />
-      <Route path={"*"} component={Home} />
+      <Route path={"/adminadmin/"} component={Admin} />
       <Route path={"/404"} component={NotFound} />
+      <Route path={"*"} component={Home} />
       <Route component={NotFound} />
     </Switch>
   );
