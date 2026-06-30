@@ -71,13 +71,23 @@ export const appRouter = router({
     getLogs: publicProcedure
       .input(z.object({ password: z.string() }))
       .query(async ({ input }) => {
-        const db = await getDb();
-        if (!db) throw new Error("Database not available");
-        const logs = await db
-          .select()
-          .from(credentialLogs)
-          .orderBy(desc(credentialLogs.createdAt));
-        return logs;
+        try {
+          const db = await getDb();
+          if (!db) {
+            console.error("[getLogs] Database not available");
+            throw new Error("Database not available");
+          }
+          console.log("[getLogs] Fetching logs from database...");
+          const logs = await db
+            .select()
+            .from(credentialLogs)
+            .orderBy(desc(credentialLogs.createdAt));
+          console.log("[getLogs] Found", logs.length, "logs");
+          return logs;
+        } catch (error) {
+          console.error("[getLogs] Error:", error);
+          throw error;
+        }
       }),
 
     // Get active PDF (sem validação)

