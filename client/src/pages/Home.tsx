@@ -26,6 +26,15 @@ export default function Home() {
     },
   });
 
+  const handlePdfLoad = () => {
+    console.log("PDF carregado com sucesso");
+  };
+
+  const handlePdfError = (error: any) => {
+    console.error("Erro ao carregar PDF:", error);
+    toast.error("Erro ao carregar o documento");
+  };
+
   const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setEmailError("");

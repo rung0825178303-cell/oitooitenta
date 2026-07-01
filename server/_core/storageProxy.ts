@@ -10,6 +10,13 @@ export function registerStorageProxy(app: Express) {
     }
 
     if (!ENV.forgeApiUrl || !ENV.forgeApiKey) {
+      // Em desenvolvimento, redireciona para S3 diretamente
+      if (process.env.NODE_ENV === "development") {
+        const s3Url = `https://manus-storage.s3.amazonaws.com/${key}`;
+        res.set("Cache-Control", "no-store");
+        res.redirect(307, s3Url);
+        return;
+      }
       res.status(500).send("Storage proxy not configured");
       return;
     }
