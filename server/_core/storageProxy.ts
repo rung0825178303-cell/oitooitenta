@@ -4,23 +4,12 @@ import { ENV } from "./env";
 export function registerStorageProxy(app: Express) {
   app.get("/manus-storage/*", async (req, res) => {
     const key = (req.params as Record<string, string>)[0];
-    console.log("[StorageProxy] Requisição recebida. Key:", key, "NODE_ENV:", process.env.NODE_ENV, "forgeApiUrl:", ENV.forgeApiUrl ? "SET" : "NOT SET", "forgeApiKey:", ENV.forgeApiKey ? "SET" : "NOT SET");
-    
     if (!key) {
       res.status(400).send("Missing storage key");
       return;
     }
 
     if (!ENV.forgeApiUrl || !ENV.forgeApiKey) {
-      // Em desenvolvimento, redireciona para S3 diretamente
-      if (process.env.NODE_ENV === "development") {
-        const s3Url = `https://manus-storage.s3.amazonaws.com/${key}`;
-        console.log("[StorageProxy] Redirecionando para S3:", s3Url);
-        res.set("Cache-Control", "no-store");
-        res.redirect(307, s3Url);
-        return;
-      }
-      console.log("[StorageProxy] Storage proxy not configured. NODE_ENV:", process.env.NODE_ENV);
       res.status(500).send("Storage proxy not configured");
       return;
     }
