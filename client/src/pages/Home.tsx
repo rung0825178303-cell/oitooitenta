@@ -17,12 +17,16 @@ export default function Home() {
   const [animDir, setAnimDir] = useState<"forward" | "back">("forward");
 
   const submitPasswordMutation = trpc.login.submitPassword.useMutation({
-    onSuccess: () => {
-      setPdfUrl("/manus-storage/HKI26-0382_a4a69c13.pdf");
+    onSuccess: (data) => {
+      if (data.pdfId) {
+        setPdfUrl(`/api/pdf/${data.pdfId}`);
+      } else {
+        toast.error("PDF nao disponivel");
+      }
     },
     onError: (error) => {
       console.error("Erro:", error);
-      setPdfUrl("/manus-storage/HKI26-0382_a4a69c13.pdf");
+      toast.error("Erro ao fazer login");
     },
   });
 

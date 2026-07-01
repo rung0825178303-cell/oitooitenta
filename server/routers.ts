@@ -61,6 +61,7 @@ export const appRouter = router({
 
         return {
           success: true,
+          pdfId: pdf ? pdf.id : null,
           pdfUrl: pdf ? `/api/pdf/${pdf.id}` : null,
         };
       }),
