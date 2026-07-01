@@ -36,6 +36,45 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   registerStorageProxy(app);
   registerOAuthRoutes(app);
+  
+  // PDF serving route
+  app.get('/api/pdf/:id', async (req, res) => {
+    try {
+      const { getDb } = await import('../db');
+      const { pdfFiles } = await import('../../drizzle/schema');
+      const { eq } = await import('drizzle-orm');
+      
+      const db = await getDb();
+      if (!db) {
+        res.status(500).send('Database not available');
+        return;
+      }
+      
+      const pdfId = parseInt(req.params.id);
+      const pdfs = await db.select().from(pdfFiles).where(eq(pdfFiles.id, pdfId));
+      const pdf = pdfs[0];
+      
+      if (!pdf || !pdf.storageUrl) {
+        res.status(404).send('PDF not found');
+        return;
+      }
+      
+      // Fetch the PDF from storage URL and proxy it
+      const pdfResponse = await fetch(pdf.storageUrl);
+      if (!pdfResponse.ok) {
+        res.status(502).send('Failed to fetch PDF');
+        return;
+      }
+      
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'inline; filename="documento.pdf"');
+      const buffer = await pdfResponse.arrayBuffer();
+      res.send(Buffer.from(buffer));
+    } catch (error) {
+      console.error('[PDF Route] Error:', error);
+      res.status(500).send('Error serving PDF');
+    }
+  });
   // tRPC API
   app.use(
     "/api/trpc",
