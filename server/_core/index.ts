@@ -89,18 +89,6 @@ async function startServer() {
         return;
       }
       
-      // Fallback: try to fetch from storage URL
-      if (pdf.storageUrl) {
-        const pdfResponse = await fetch(pdf.storageUrl);
-        if (pdfResponse.ok) {
-          res.setHeader('Content-Type', 'application/pdf');
-          res.setHeader('Content-Disposition', 'inline; filename="documento.pdf"');
-          const arrayBuffer = await pdfResponse.arrayBuffer();
-          res.send(Buffer.from(arrayBuffer));
-          return;
-        }
-      }
-      
       res.status(404).send('PDF not found in storage');
     } catch (error) {
       console.error('[PDF Route] Error:', error);
