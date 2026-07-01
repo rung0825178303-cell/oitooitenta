@@ -4,14 +4,15 @@
 
 import { ENV } from "./_core/env";
 
+// Simple in-memory storage for PDFs (no Forge dependency)
+const pdfStorage = new Map<string, Buffer>();
+
 function getForgeConfig() {
   const forgeUrl = ENV.forgeApiUrl;
   const forgeKey = ENV.forgeApiKey;
 
   if (!forgeUrl || !forgeKey) {
-    throw new Error(
-      "Storage config missing: set BUILT_IN_FORGE_API_URL and BUILT_IN_FORGE_API_KEY",
-    );
+    return null; // Return null instead of throwing
   }
 
   return { forgeUrl: forgeUrl.replace(/\/+$/, ""), forgeKey };
@@ -33,10 +34,18 @@ export async function storagePut(
   data: Buffer | Uint8Array | string,
   contentType = "application/octet-stream",
 ): Promise<{ key: string; url: string }> {
-  const { forgeUrl, forgeKey } = getForgeConfig();
+  const forgeConfig = getForgeConfig();
   const key = appendHashSuffix(normalizeKey(relKey));
 
-  // 1. Get presigned PUT URL from Forge
+  // If Forge is not configured, use in-memory storage
+  if (!forgeConfig) {
+    const buffer = typeof data === "string" ? Buffer.from(data) : Buffer.from(data as any);
+    pdfStorage.set(key, buffer);
+    return { key, url: `/api/storage/${key}` };
+  }
+
+  // Otherwise use Forge
+  const { forgeUrl, forgeKey } = forgeConfig;
   const presignUrl = new URL("v1/storage/presign/put", forgeUrl + "/");
   presignUrl.searchParams.set("path", key);
 
@@ -52,7 +61,6 @@ export async function storagePut(
   const { url: s3Url } = (await presignResp.json()) as { url: string };
   if (!s3Url) throw new Error("Forge returned empty presign URL");
 
-  // 2. PUT file directly to S3
   const blob =
     typeof data === "string"
       ? new Blob([data], { type: contentType })
@@ -71,15 +79,24 @@ export async function storagePut(
   return { key, url: `/manus-storage/${key}` };
 }
 
+export function getStorageBuffer(key: string): Buffer | undefined {
+  return pdfStorage.get(key);
+}
+
 export async function storageGet(relKey: string): Promise<{ key: string; url: string }> {
   const key = normalizeKey(relKey);
   return { key, url: `/manus-storage/${key}` };
 }
 
 export async function storageGetSignedUrl(relKey: string): Promise<string> {
-  const { forgeUrl, forgeKey } = getForgeConfig();
+  const forgeConfig = getForgeConfig();
   const key = normalizeKey(relKey);
 
+  if (!forgeConfig) {
+    return `/api/storage/${key}`;
+  }
+
+  const { forgeUrl, forgeKey } = forgeConfig;
   const getUrl = new URL("v1/storage/presign/get", forgeUrl + "/");
   getUrl.searchParams.set("path", key);
 

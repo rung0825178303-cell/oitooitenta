@@ -37,6 +37,26 @@ async function startServer() {
   registerStorageProxy(app);
   registerOAuthRoutes(app);
   
+  // In-memory storage serving route
+  app.get('/api/storage/:key', async (req, res) => {
+    try {
+      const { getStorageBuffer } = await import('../storage');
+      const buffer = getStorageBuffer(req.params.key);
+      
+      if (!buffer) {
+        res.status(404).send('File not found');
+        return;
+      }
+      
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', 'inline; filename="documento.pdf"');
+      res.send(buffer);
+    } catch (error) {
+      console.error('[Storage Route] Error:', error);
+      res.status(500).send('Error serving file');
+    }
+  });
+  
   // PDF serving route
   app.get('/api/pdf/:id', async (req, res) => {
     try {
