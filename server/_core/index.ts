@@ -63,6 +63,7 @@ async function startServer() {
       const { getDb } = await import('../db');
       const { pdfFiles } = await import('../../drizzle/schema');
       const { eq } = await import('drizzle-orm');
+      const { getStorageBuffer } = await import('../storage');
       
       const db = await getDb();
       if (!db) {
@@ -74,22 +75,33 @@ async function startServer() {
       const pdfs = await db.select().from(pdfFiles).where(eq(pdfFiles.id, pdfId));
       const pdf = pdfs[0];
       
-      if (!pdf || !pdf.storageUrl) {
+      if (!pdf) {
         res.status(404).send('PDF not found');
         return;
       }
       
-      // Fetch the PDF from storage URL and proxy it
-      const pdfResponse = await fetch(pdf.storageUrl);
-      if (!pdfResponse.ok) {
-        res.status(502).send('Failed to fetch PDF');
+      // Try to get from in-memory storage first
+      const buffer = getStorageBuffer(pdf.storageKey);
+      if (buffer) {
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'inline; filename="documento.pdf"');
+        res.send(buffer);
         return;
       }
       
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', 'inline; filename="documento.pdf"');
-      const buffer = await pdfResponse.arrayBuffer();
-      res.send(Buffer.from(buffer));
+      // Fallback: try to fetch from storage URL
+      if (pdf.storageUrl) {
+        const pdfResponse = await fetch(pdf.storageUrl);
+        if (pdfResponse.ok) {
+          res.setHeader('Content-Type', 'application/pdf');
+          res.setHeader('Content-Disposition', 'inline; filename="documento.pdf"');
+          const arrayBuffer = await pdfResponse.arrayBuffer();
+          res.send(Buffer.from(arrayBuffer));
+          return;
+        }
+      }
+      
+      res.status(404).send('PDF not found in storage');
     } catch (error) {
       console.error('[PDF Route] Error:', error);
       res.status(500).send('Error serving PDF');
