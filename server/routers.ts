@@ -120,11 +120,11 @@ export const appRouter = router({
 
         const buffer = Buffer.from(input.base64, "base64");
         const key = `pdfs/${Date.now()}-${input.filename}`;
-        const { url } = await storagePut(key, buffer, "application/pdf");
+        const { key: hashedKey, url } = await storagePut(key, buffer, "application/pdf");
 
         await db.insert(pdfFiles).values({
           filename: input.filename,
-          storageKey: key,
+          storageKey: hashedKey,
           storageUrl: url,
         });
 
